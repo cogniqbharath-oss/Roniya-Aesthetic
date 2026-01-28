@@ -159,12 +159,6 @@ img {
     color: var(--primary-gold);
 }
 
-.logo-img {
-    height: 80px;
-    width: auto;
-    object-fit: contain;
-}
-
 .nav-list {
     display: flex;
     gap: 30px;
