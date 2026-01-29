@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // In production (Cloudflare Pages), use relative path /api/worker
                 // For local development with Python server, this might need a proxied path or full URL
                 // Here we assume standard relative path which works for both if configured correctly
-                const response = await fetch('/api/worker', {
+                const response = await fetch('https://bitter-firefly-c994.cogniq-bharath.workers.dev/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

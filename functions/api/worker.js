@@ -1,28 +1,29 @@
-export async function onRequest(context) {
-    // Handle CORS for development and production
-    if (context.request.method === "OPTIONS") {
-        return new Response(null, {
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type",
-            },
-        });
-    }
-
-    if (context.request.method !== "POST") {
-        return new Response("Method Not Allowed", { status: 405 });
-    }
-
-    try {
-        const { message } = await context.request.json();
-        const apiKey = context.env.GEMINI_API_KEY;
-
-        if (!apiKey) {
-            throw new Error("Missing GEMINI_API_KEY environment variable");
+export default {
+    async fetch(request, env, ctx) {
+        // Handle CORS for development and production
+        if (request.method === "OPTIONS") {
+            return new Response(null, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "POST, OPTIONS",
+                    "Access-Control-Allow-Headers": "Content-Type",
+                },
+            });
         }
 
-        const systemPrompt = `You are the AI assistant for Roniya Aesthetic, a medical-led aesthetic clinic in Oldbury, Birmingham.
+        if (request.method !== "POST") {
+            return new Response("Method Not Allowed", { status: 405 });
+        }
+
+        try {
+            const { message } = await request.json();
+            const apiKey = env.API_KEY_Roniya;
+
+            if (!apiKey) {
+                throw new Error("Missing API_KEY_Roniya environment variable");
+            }
+
+            const systemPrompt = `You are the AI assistant for Roniya Aesthetic, a medical-led aesthetic clinic in Oldbury, Birmingham.
     
     BUSINESS INFO:
     - Location: 20 Wolverhampton Road, B68 0LH, Oldbury, Birmingham
@@ -51,40 +52,41 @@ export async function onRequest(context) {
     
     User Query: ${message}`;
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: systemPrompt }]
-                }]
-            }),
-        });
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=${apiKey}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: systemPrompt }]
+                    }]
+                }),
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (data.error) {
-            throw new Error(data.error.message);
+            if (data.error) {
+                throw new Error(data.error.message);
+            }
+
+            const aiResponse = data.candidates[0].content.parts[0].text;
+
+            return new Response(JSON.stringify({ response: aiResponse }), {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
+
+        } catch (error) {
+            return new Response(JSON.stringify({ error: error.message }), {
+                status: 500,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
         }
-
-        const aiResponse = data.candidates[0].content.parts[0].text;
-
-        return new Response(JSON.stringify({ response: aiResponse }), {
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-        });
-
-    } catch (error) {
-        return new Response(JSON.stringify({ error: error.message }), {
-            status: 500,
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-        });
     }
-}
+};
