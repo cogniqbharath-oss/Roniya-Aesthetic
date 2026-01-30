@@ -43,7 +43,7 @@ export default {
     AUTOMATION TRIGGERS (Simulated):
     - If user asks about "aftercare" for a specific treatment, provide concise medical advice (e.g., no gym for 24h, no makeup for 12h).
     - If user asks about "pre-treatment", warn about alcohol, blood thinners, and makeup.
-    - If user asks to "book", use this EXACT response: "You can book via the form on our website: Book Online Here. Alternatively, call us on 07738 889858."
+    - If user asks to "book", use this EXACT response: "You can book via the form on our website: <a href='#contact' style='color: #D4AF37; text-decoration: underline;' onclick='document.getElementById(\"chatbot-widget\").style.display=\"none\"; document.getElementById(\"chat-toggle\").style.display=\"block\";'>Book Online Here</a>. Alternatively, call us on 07738 889858."
     
     TONE & STYLE:
     - CONCISE AND DIRECT. Answer ONLY what is asked.
