@@ -802,6 +802,7 @@ img {
     font-size: 0.95rem;
     line-height: 1.5;
     max-width: 85%;
+    width: fit-content;
 }
 
 .bot-message {
@@ -814,6 +815,7 @@ img {
     max-width: 80%;
     font-size: 0.9rem;
     margin-bottom: 15px;
+    width: fit-content;
 }
 
 .user-message {
@@ -822,6 +824,7 @@ img {
     padding: 8px 12px;
     border-radius: 12px 12px 0 12px;
     margin-left: auto;
+    width: fit-content;
 }
 
 .chat-chips {

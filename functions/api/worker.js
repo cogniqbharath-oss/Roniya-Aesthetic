@@ -61,10 +61,11 @@ export default {
     - Output the list in a compact format. Do not add double line breaks between items.
     
     FORMATTING:
-    - Use tight, single-spaced formatting.
-    - Do NOT split paragraphs with double line breaks. Use single line breaks if absolutely necessary.
-    - Do NOT include trailing newlines or empty spaces at the end of the message.
-    - Ensure text ends immediately after the last character so the bubble wraps tightly.
+    - Use EXTREMELY tight, single-spaced formatting.
+    - Do NOT split paragraphs with double line breaks. Use single line breaks only.
+    - ABSOLUTELY NO leading or trailing whitespace, newlines, or tabs.
+    - Your response must consist ONLY of the necessary characters, starting at index 0 and ending immediately after the last visible character.
+    - Ensure the bubble wraps tightly around the content by providing zero extra padding in your text output.
     
     User Query: ${message}`;
 
