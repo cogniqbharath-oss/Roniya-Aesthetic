@@ -57,6 +57,7 @@ export default {
     - If asked for location, give location.
     - Do NOT diagnose medical conditions.
     - If unsure, ask them to book a consultation.
+    - Output the list in a compact format. Do not add double line breaks between items.
     
     User Query: ${message}`;
 

@@ -84,15 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Expose functions globally for inline onclick handlers
-    window.sendMessage = async function() {
+    window.sendMessage = async function () {
         const message = chatInput.value.trim();
         if (message) {
             addMessage(message, 'user');
             chatInput.value = '';
-            
+
             // Show typing indicator
             const typingId = addTypingIndicator();
-            
+
             try {
                 // Determine API URL based on environment
                 // In production (Cloudflare Pages), use relative path /api/worker
@@ -122,13 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.handleKeyPress = function(event) {
+    window.handleKeyPress = function (event) {
         if (event.key === 'Enter') {
             window.sendMessage();
         }
     };
 
-    window.sendChip = function(text) {
+    window.sendChip = function (text) {
         chatInput.value = text;
         window.sendMessage();
     };
@@ -136,12 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', `${sender}-message`);
-        
+
         // Convert newlines to <br> for bot messages
         if (sender === 'bot') {
+            text = text.trim();
             text = text.replace(/\n/g, '<br>');
         }
-        
+
         messageDiv.innerHTML = text;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -172,20 +173,20 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const btn = bookingForm.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
-            
+
             btn.innerText = 'Sending Request...';
             btn.disabled = true;
-            
+
             // Simulate API call
             setTimeout(() => {
                 btn.innerText = 'Request Sent!';
                 btn.style.backgroundColor = '#4CAF50';
-                
+
                 // Show success message
                 alert('Thank you for your booking request! Our team will contact you shortly to confirm your appointment.');
-                
+
                 bookingForm.reset();
-                
+
                 setTimeout(() => {
                     btn.innerText = originalText;
                     btn.disabled = false;
