@@ -168,6 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Booking Form Handling
     const bookingForm = document.getElementById('bookingForm');
+    const successModal = document.getElementById('booking-success-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+
     if (bookingForm) {
         bookingForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -182,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.innerText = 'Request Sent!';
                 btn.style.backgroundColor = '#4CAF50';
 
-                // Show success message
-                alert('Thank you for your booking request! Our team will contact you shortly to confirm your appointment.');
+                // Show success modal instead of alert
+                successModal.classList.add('active');
 
                 bookingForm.reset();
 
@@ -193,6 +196,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.backgroundColor = '';
                 }, 3000);
             }, 1500);
+        });
+    }
+
+    // Close modal functionality
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            successModal.classList.remove('active');
+        });
+    }
+
+    // Close modal when clicking outside
+    if (successModal) {
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                successModal.classList.remove('active');
+            }
         });
     }
 });
